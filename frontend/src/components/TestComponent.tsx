@@ -5,5 +5,5 @@ export default function TestComponent() {
   useEffect(() => {
     setTest('useEffect change')
   }, [])
-  return <div>TestComponent {test}</div>
+  return <div>TestComponent {test} HEJ</div>
 }
