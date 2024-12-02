@@ -11,6 +11,12 @@
 
 `warn`eller `allow` ?
 
+För formulär:
+
+```
+npm install formik
+```
+
 Skapa en fullstack-applikation eller bygg vidare på en tidigare fullstack-applikation (till exempel Laboration 3 i Software life cycle management) och skriv mjukvarutester för denna.
 
 Precis som i den föregående kursen måste alla kodändringar måste föras in på main-branch:en minst en gång per “arbetsdag” (Continous Integration). Mjukvarutester underlättar Continous Integration eftersom risken att saker “går sönder” minskar när det finns tester.
