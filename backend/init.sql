@@ -19,3 +19,6 @@ CREATE TABLE articles_categories (
     article_id INTEGER NOT NULL REFERENCES articles,
     categories_id INTEGER NOT NULL  REFERENCES categories
 );
+
+INSERT INTO articles (article_text, article_author)
+VALUES ('hej', 'peter');
