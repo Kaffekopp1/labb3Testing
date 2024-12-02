@@ -1,11 +1,13 @@
-import TestComponent from './components/TestComponent'
+// import TestComponent from './components/TestComponent'
 import './App.css'
+import ArticleCard from './components/ArticleCard'
 
 function App() {
   return (
     <>
       <div>
-        <TestComponent />
+        {/* <TestComponent /> */}
+        <ArticleCard />
       </div>
     </>
   )
