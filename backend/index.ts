@@ -12,7 +12,6 @@ dotenv.config()
 const client = new Client({
   connectionString: process.env.PGURI,
 })
-const port = process.env.PORT || 3000
 
 client.connect()
 
