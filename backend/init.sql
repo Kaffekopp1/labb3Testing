@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS articles;
-DROP TABLE IF EXISTS categories;
 DROP TABLE IF EXISTS articles_categories;
+DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS articles;
 
 CREATE TABLE articles (
     id SERIAL PRIMARY KEY,
@@ -15,10 +15,27 @@ CREATE TABLE categories (
 
 CREATE TABLE articles_categories (
     id SERIAL PRIMARY KEY,
-    test TEXT NOT NULL,
     article_id INTEGER NOT NULL REFERENCES articles,
     categories_id INTEGER NOT NULL  REFERENCES categories
 );
 
-INSERT INTO articles (article_text, article_author)
-VALUES ('hej', 'peter');
+CREATE OR REPLACE FUNCTION insert_articles(
+ articleText TEXT,
+ articleAuthor TEXT,
+ categorieName TEXT
+)
+RETURNS TABLE(article_id INTEGER, article_author TEXT, article_text TEXT ) AS $$
+DECLARE
+  article_id INTEGER;
+  categorie_id INTEGER;
+BEGIN
+ INSERT INTO articles ( article_text, article_author) VALUES ( articleText,  articleAuthor )
+ RETURNING id INTO article_id;
+ INSERT INTO categories ( categorie_name) VALUES (categorieName )
+ RETURNING id INTO categorie_id;
+ INSERT INTO articles_categories ( article_id , categories_id) VALUES (article_id, categorie_id );
+ RETURN  query SELECT * FROM articles WHERE id =article_id ;
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT * FROM insert_articles('testnamn för insert 434','testtext insertbrarba' , 'test kategoribbarr');
