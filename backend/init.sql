@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS articles;
 
 CREATE TABLE articles (
     id SERIAL PRIMARY KEY,
+    article_name TEXT NOT NULL,
     article_text TEXT NOT NULL,
     article_author TEXT NOT NULL
 );
@@ -22,14 +23,15 @@ CREATE TABLE articles_categories (
 CREATE OR REPLACE FUNCTION insert_articles(
  articleText TEXT,
  articleAuthor TEXT,
+ articleName TEXT,
  categorieName TEXT
 )
-RETURNS TABLE(article_id INTEGER, article_author TEXT, article_text TEXT ) AS $$
+RETURNS TABLE(article_id INTEGER, article_author TEXT, article_text TEXT, article_name TEXT ) AS $$
 DECLARE
   article_id INTEGER;
   categorie_id INTEGER;
 BEGIN
- INSERT INTO articles ( article_text, article_author) VALUES ( articleText,  articleAuthor )
+ INSERT INTO articles ( article_text, article_author, article_name) VALUES ( articleText,  articleAuthor, articleName )
  RETURNING id INTO article_id;
  INSERT INTO categories ( categorie_name) VALUES (categorieName )
  RETURNING id INTO categorie_id;
@@ -38,4 +40,4 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-SELECT * FROM insert_articles('testnamn för insert 434','testtext insertbrarba' , 'test kategoribbarr');
+SELECT * FROM insert_articles('testnamn för insert 434','testtext insertbrarba' ,' artikelnamn', 'test kategoribbarr');
