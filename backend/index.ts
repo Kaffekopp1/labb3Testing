@@ -3,6 +3,12 @@ import express, { Response, Request } from 'express'
 import * as dotenv from 'dotenv'
 import { Client } from 'pg'
 
+interface articleInsert {
+  articleText: string
+  articleAuthor: string
+  categorieName: string
+}
+
 interface article {
   articleText: string
   articleAuthor: string
@@ -26,11 +32,11 @@ const client = new Client({
 client.connect()
 
 app.post('/api', async (req, res: Response<Serverarticle[]>) => {
-  const { articleText, articleAuthor }: article = req.body
+  const { articleText, articleAuthor, categorieName }: articleInsert = req.body
 
   const { rows } = await client.query<Serverarticle>(
-    `INSERT INTO articles (article_text, article_author) VALUES ($1, $2) RETURNING *`,
-    [articleText, articleAuthor]
+    `SELECT * FROM insert_articles($1, $2, $3)`,
+    [articleText, articleAuthor, categorieName]
   )
   res.send(rows)
 })
