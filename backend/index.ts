@@ -6,6 +6,7 @@ import { Client } from 'pg'
 interface articleInsert {
   articleText: string
   articleAuthor: string
+  articleName: string
   categorieName: string
 }
 
@@ -32,10 +33,15 @@ const client = new Client({
 client.connect()
 
 app.post('/api', async (req, res: Response<Serverarticle[]>) => {
-  const { articleText, articleAuthor, categorieName }: articleInsert = req.body
+  const {
+    articleText,
+    articleAuthor,
+    articleName,
+    categorieName,
+  }: articleInsert = req.body
   const { rows } = await client.query<Serverarticle>(
-    `SELECT * FROM insert_articles($1, $2, $3)`,
-    [articleText, articleAuthor, categorieName]
+    `SELECT * FROM insert_articles($1, $2, $3, $4)`,
+    [articleText, articleAuthor, articleName, categorieName]
   )
   res.send(rows)
 })
