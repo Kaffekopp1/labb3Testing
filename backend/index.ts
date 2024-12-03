@@ -33,7 +33,6 @@ client.connect()
 
 app.post('/api', async (req, res: Response<Serverarticle[]>) => {
   const { articleText, articleAuthor, categorieName }: articleInsert = req.body
-
   const { rows } = await client.query<Serverarticle>(
     `SELECT * FROM insert_articles($1, $2, $3)`,
     [articleText, articleAuthor, categorieName]
